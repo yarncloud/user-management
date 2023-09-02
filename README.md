@@ -1,7 +1,8 @@
 User management module for Yii 2
 =====
 
-`This repository is not actively maintained. If you want to add some changes, just fork it and safely use your fork.`
+`This repository is forked internally because it's not actively maintained.
+
 
 Perks
 ---
@@ -16,6 +17,17 @@ Perks
 
 Installation
 ------------
+
+Add Yarn Cloud repository to composer
+
+```
+"repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/yarncloud/user-management"
+    }
+]
+```
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
 
