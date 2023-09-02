@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Person;
 use webvimark\modules\UserManagement\components\GhostHtml;
 use webvimark\modules\UserManagement\models\rbacDB\Role;
 use webvimark\modules\UserManagement\models\User;
@@ -77,7 +78,25 @@ $this->params['breadcrumbs'][] = $this->title;
 						'attribute'=>'superadmin',
 						'visible'=>Yii::$app->user->isSuperadmin,
 					],
+                    [
+                        'label' => Yii::t('app', 'Picture'),
 
+                        'format' => 'raw',
+                        'value' => function ($model) {
+
+							$person = Person::findOne(['user_id' => $model->id]);
+
+							if($person)
+							{
+								return
+                                '<div class="feed-element no-padding">
+									<div class="pull-left">
+										<img alt="image" class="img-circle" onerror="this.src=\'/inspinia/img/default_profile.png\';" src="' . Person::getProfilePicture($person->type, $person->id) . '">
+									</div>
+								</div>';
+							}
+                        }
+                    ],
 					[
 						'attribute'=>'username',
 						'value'=>function(User $model){
@@ -111,6 +130,25 @@ $this->params['breadcrumbs'][] = $this->title;
 							},
 						'format'=>'raw',
 						'visible'=>User::hasPermission('viewRegistrationIp'),
+					],
+					[
+						'value'=>function(User $model){
+							$person = Person::findOne(['user_id' => $model->id]);
+
+							if($person)
+							{
+								return GhostHtml::a(
+									UserManagementModule::t('back', 'Profile'),
+									['/person/person/view', 'id'=> $person->id],
+									['class'=>'btn btn-sm btn-info', 'data-pjax'=>0]);
+							}
+
+						},
+						'format'=>'raw',
+						'visible'=>User::canRoute('/person/*'),
+						'options'=>[
+							'width'=>'10px',
+						],
 					],
 					[
 						'value'=>function(User $model){
