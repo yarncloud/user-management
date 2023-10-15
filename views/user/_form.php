@@ -5,6 +5,8 @@ use webvimark\modules\UserManagement\UserManagementModule;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
+use yii\helpers\ArrayHelper;
+use app\models\Person;
 
 /**
  * @var yii\web\View $this
@@ -23,6 +25,10 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 
 	<?= $form->field($model->loadDefaultValues(), 'status')
 		->dropDownList(User::getStatusList()) ?>
+
+	<?= $form->field($model, 'person_id')->dropDownList(ArrayHelper::map(Person::find()->all(), 'id', function ($model) {
+            return $model->first_name . ' ' . $model->middle_name . ' ' . $model->last_name;
+        })); ?>
 
 	<?= $form->field($model, 'username')->textInput(['maxlength' => 255, 'autocomplete'=>'off']) ?>
 

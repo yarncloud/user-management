@@ -19,6 +19,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $username
  * @property string $email
  * @property integer $email_confirmed
+ * @property integer $person_id
  * @property string $auth_key
  * @property string $password_hash
  * @property string $confirmation_token
